@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'registration_app',
     'login_app',
+    'user_detail_app',
     'rest_framework',
     'rest_framework.authtoken',
     'django.contrib.sites',
@@ -139,6 +140,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_AUTH = {
     'REGISTER_SERIALIZER': 'registration_app.serializers.CustomRegistrationSerializer',
     'LOGIN_SERIALIZER': 'login_app.serializers.CustomLoginSerializer',
+    'USER_DETAILS_SERIALIZER': 'user_detail_app.serializers.CustomUserDetailSerializer'
 }
 
 REST_FRAMEWORK = {
@@ -155,8 +157,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "tom.petri7@gmail.com"
 EMAIL_HOST_PASSWORD = "azkx dupy cagm ggqp" 
 
-
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_EMAIL_VERIFICATION = "mandatory" 
 ACCOUNT_EMAIL_REQUIRED = True
 
