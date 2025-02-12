@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'registration_app',
     'login_app',
     'user_detail_app',
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
 SITE_ID = 1
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -143,11 +145,17 @@ REST_AUTH = {
     'USER_DETAILS_SERIALIZER': 'user_detail_app.serializers.CustomUserDetailSerializer'
 }
 
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
 }
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",
+]
 
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

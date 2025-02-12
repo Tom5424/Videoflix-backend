@@ -4,6 +4,7 @@ from dj_rest_auth.serializers import UserDetailsSerializer
 
 class CustomUserDetailSerializer(UserDetailsSerializer):
 
+
     class Meta:
         model = CustomUser 
         fields = ["id", "email", "username", "first_name", "last_name"]    
