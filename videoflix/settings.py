@@ -142,7 +142,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_AUTH = {
     'REGISTER_SERIALIZER': 'registration_app.serializers.CustomRegistrationSerializer',
     'LOGIN_SERIALIZER': 'login_app.serializers.CustomLoginSerializer',
-    'USER_DETAILS_SERIALIZER': 'user_detail_app.serializers.CustomUserDetailSerializer'
+    'USER_DETAILS_SERIALIZER': 'user_detail_app.serializers.CustomUserDetailSerializer',
 }
 
 
@@ -168,6 +168,7 @@ EMAIL_HOST_PASSWORD = "azkx dupy cagm ggqp"
 ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_EMAIL_VERIFICATION = "mandatory" 
 ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_CONFIRMATION_HMAC = False
 
 
 AUTH_USER_MODEL = "login_app.CustomUser"
