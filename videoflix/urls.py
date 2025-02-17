@@ -20,12 +20,15 @@ from django.contrib import admin
 from django.urls import path, include
 from dj_rest_auth.views import PasswordResetConfirmView
 from registration_app.views import CustomVerifyEmailView
+# from login_app.views import CustomLoginView
+
 
 urlpatterns = [
     path("", RedirectView.as_view(), name="redirect-view"),
     path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
     path("api/auth/registration/verify-email/", CustomVerifyEmailView.as_view(), name="custom-verify-email"),
+    # path("api/auth/login/", CustomLoginView.as_view(), name="custom-login"),
     path("api/auth/", include("dj_rest_auth.urls")),
     path("api/auth/registration/", include("dj_rest_auth.registration.urls")),
     path("api/auth/password/reset/confirm/<uidb64>/<token>/", PasswordResetConfirmView.as_view(), name="password_reset_confirm"),

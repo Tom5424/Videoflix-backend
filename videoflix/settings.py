@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'registration_app',
     'login_app',
     'user_detail_app',
+    'reset_password_app',
     'rest_framework',
     'rest_framework.authtoken',
     'django.contrib.sites',
@@ -143,6 +144,7 @@ REST_AUTH = {
     'REGISTER_SERIALIZER': 'registration_app.serializers.CustomRegistrationSerializer',
     'LOGIN_SERIALIZER': 'login_app.serializers.CustomLoginSerializer',
     'USER_DETAILS_SERIALIZER': 'user_detail_app.serializers.CustomUserDetailSerializer',
+    'PASSWORD_RESET_CONFIRM_SERIALIZER': 'reset_password_app.serializers.CustomPasswordResetConfirmSerializer',
 }
 
 
