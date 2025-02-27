@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication 
 from rest_framework.permissions import IsAuthenticated 
+from rest_framework import status 
 
 
 class ListVideos(APIView):
@@ -14,4 +15,16 @@ class ListVideos(APIView):
     def get(self, request):
         videos = Video.objects.all()
         serializer = VideoSerializer(videos, many=True)
-        return Response(data=serializer.data)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+    
+
+
+class SingleVideo(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+    def get(self, request, id):
+        video = Video.objects.get(id=id)
+        serializer = VideoSerializer(video)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)    

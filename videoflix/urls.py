@@ -19,7 +19,6 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from video_app.views import ListVideos
 from .views import RedirectView
 from dj_rest_auth.views import PasswordResetConfirmView
 from registration_app.views import CustomVerifyEmailView
@@ -29,7 +28,7 @@ from registration_app.views import CustomVerifyEmailView
 urlpatterns = [
     path("", RedirectView.as_view(), name="redirect-view"),
     path("admin/", admin.site.urls),
-    path("api/videos/", ListVideos.as_view(), name="video-list"),
+    path("api/", include("video_app.urls")),
     path("api-auth/", include("rest_framework.urls")),
     path("api/auth/registration/verify-email/", CustomVerifyEmailView.as_view(), name="custom-verify-email"),
     # path("api/auth/login/", CustomLoginView.as_view(), name="custom-login"),
