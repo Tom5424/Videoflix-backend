@@ -1,4 +1,4 @@
-from .tasks import convert_360p
+from .tasks import convert_to_360p
 from django.db import models
 import os
 
@@ -20,11 +20,9 @@ class Video(models.Model):
 
 
     def save(self):
-        if "media/videos" not in self.video_file.path:
-            self.video_file.name = "videos/" + self.video_file.name
-        convert_360p(self.video_file.path)
+        super().save()
+        convert_to_360p(self.video_file.path)
         print("Video uploaded.")
-        return super().save()
 
 
     def delete(self):
