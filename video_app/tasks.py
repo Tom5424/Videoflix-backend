@@ -11,5 +11,5 @@ def convert_to_360p(file_path):
 
 
 def convert_to_hsl_format(file_path):
-    cmd_2 = f'ffmpeg -i "{file_path}" -codec: copy -start_number 0 -hls_time 10 -hls_list_size 0 -f hls output.m3u8'
-    subprocess.run(cmd_2)
+    cmd = f'ffmpeg -i "{file_path}" -codec: copy -start_number 0 -hls_time 10 -hls_list_size 0 -f hls output.m3u8'
+    subprocess.run(cmd)
