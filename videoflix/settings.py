@@ -30,6 +30,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CACHE_TTL = 60 * 15
 
 # Application definition
 
@@ -72,7 +73,16 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
 ]
 
+
+CELERY_BROKER_URL = 'redis://:foobared@localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+CELERY_FLOWER_PORT = 5555
+
+
 ROOT_URLCONF = 'videoflix.urls'
+
 
 TEMPLATES = [
     {
@@ -150,8 +160,11 @@ CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
         "LOCATION": "redis://127.0.0.1:6379/1",
-        "OPTIONS": {"CLIENT_CLASS": "django_redis.client.DefaultClient"},
-        "KEY_PREFIX": "videoflix",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "PASSWORD": "foobared",
+        },
+        "KEY_PREFIX": "videoflix"
     }
 }
 

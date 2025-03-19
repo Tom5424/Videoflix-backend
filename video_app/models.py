@@ -1,4 +1,4 @@
-from .tasks import convert_to_360p
+from video_app.tasks import convert_to_360p
 from django.db import models
 import os
 
@@ -21,7 +21,7 @@ class Video(models.Model):
 
     def save(self):
         super().save()
-        convert_to_360p(self.video_file.path)
+        convert_to_360p.delay(self.video_file.path)
         print("Video uploaded.")
 
 
