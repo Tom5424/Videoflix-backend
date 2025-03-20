@@ -1,6 +1,19 @@
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
 from django.contrib import admin
 from .models import Video, Genre
 
 
-admin.site.register(Video)
 admin.site.register(Genre)
+
+
+class VideoResource(resources.ModelResource):
+    
+
+    class Meta:
+        model = Video
+
+
+@admin.register(Video)
+class BookAdmin(ImportExportModelAdmin):
+    resource_classes = [VideoResource]

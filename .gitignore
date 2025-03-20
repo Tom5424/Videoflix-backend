@@ -1,3 +1,4 @@
 /env
 /env_linux
+/static/staticfiles
 db.sqlite3
