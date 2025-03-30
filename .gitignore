@@ -1,4 +1,5 @@
 /env
 /env_linux
 /static/staticfiles
+/media
 db.sqlite3

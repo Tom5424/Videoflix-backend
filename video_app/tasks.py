@@ -1,3 +1,4 @@
+from django.core.files import File
 from celery import shared_task
 import subprocess
 import os
@@ -17,3 +18,13 @@ def convert_to_360p(file_path):
 def convert_to_hsl_format(file_path_linux):
     cmd = f'ffmpeg -i "{file_path_linux}" -codec: copy -start_number 0 -hls_time 10 -hls_list_size 0 -f hls output.m3u8'
     subprocess.run(cmd, capture_output=True, shell=True)
+
+
+def create_video_image(video):
+    video_path = video.video_file.path
+    video_image_path = os.path.splitext(video_path)[0] + ".jpg"
+    cmd = f'ffmpeg -i "{video_path}" -ss 00:00:01 -frames:v 1 -q:v 2 -update 1 "{video_image_path}"'
+    subprocess.run(cmd, shell=True, check=True)
+    with open(video_image_path, "rb") as img_file:
+        video.video_image.save(os.path.basename(video_image_path), File(img_file), save=True)
+    os.remove(video_image_path)

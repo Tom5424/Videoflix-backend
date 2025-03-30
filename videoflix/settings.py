@@ -31,7 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-CACHE_TTL = 60 * 15
+CACHE_TTL = 0  ##############################################################################
 
 # Application definition
 

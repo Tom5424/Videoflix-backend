@@ -15,5 +15,6 @@ class VideoResource(resources.ModelResource):
 
 
 @admin.register(Video)
-class BookAdmin(ImportExportModelAdmin):
+class VideoAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    exclude = ["video_image", "image_created"]
     resource_classes = [VideoResource]
