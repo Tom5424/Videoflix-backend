@@ -34,3 +34,12 @@ class GenreWithVideosSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
         fields = ["genre_name", "videos"]
+
+
+
+class DetailVideoSerializer(serializers.ModelSerializer):
+
+
+    class Meta:
+        model = Video
+        fields = ["id", "title", "description", "created_on", "video_file", "video_image"]

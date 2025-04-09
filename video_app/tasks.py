@@ -16,7 +16,11 @@ def convert_to_360p(file_path):
 
 
 def convert_to_hsl_format(file_path_linux):
-    cmd = f'ffmpeg -i "{file_path_linux}" -codec: copy -start_number 0 -hls_time 10 -hls_list_size 0 -f hls output.m3u8'
+    output_dir = "/mnt/c/Users/tompe/Desktop/Videoflix-backend/media/hls-outputs"
+    base_name = os.path.splitext(os.path.basename(file_path_linux))[0]
+    output_m3u8_data = os.path.join(output_dir, f"{base_name}.m3u8").replace("\\", "/")
+    output_ts_data = os.path.join(output_dir, f"{base_name}_%03d.ts").replace("\\", "/")
+    cmd = f'ffmpeg -i "{file_path_linux}" -c copy -start_number 0 -hls_time 10 -hls_list_size 0 -hls_segment_filename "{output_ts_data}" -f hls "{output_m3u8_data}"'
     subprocess.run(cmd, capture_output=True, shell=True)
 
 

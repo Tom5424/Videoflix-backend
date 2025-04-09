@@ -1,5 +1,5 @@
-from .models import Genre
-from .serializers import GenreWithVideosSerializer
+from .models import Genre, Video
+from .serializers import GenreWithVideosSerializer, DetailVideoSerializer
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.views.decorators.cache import cache_page
@@ -24,3 +24,14 @@ class ListVideos(APIView):
         genre = Genre.objects.all()
         serializer = GenreWithVideosSerializer(genre, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
+    
+
+class VideoDetail(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+    def get(self, request, id):
+        video = Video.objects.get(id=id)
+        serializer = DetailVideoSerializer(video)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)   
