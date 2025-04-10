@@ -26,6 +26,7 @@ class ListVideos(APIView):
         return Response(data=serializer.data, status=status.HTTP_200_OK)
     
 
+@method_decorator(cache_page(CACHE_TTL), name="dispatch")
 class VideoDetail(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -34,4 +35,13 @@ class VideoDetail(APIView):
     def get(self, request, id):
         video = Video.objects.get(id=id)
         serializer = DetailVideoSerializer(video)
-        return Response(data=serializer.data, status=status.HTTP_200_OK)   
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+    def post(self, request, id):
+        video = Video.objects.get(id=id)
+        serializer = DetailVideoSerializer(video, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  
