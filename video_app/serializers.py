@@ -42,10 +42,16 @@ class DetailVideoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Video
-        fields = ["id", "title", "description", "created_on", "video_file", "video_image", "video_progress"]
+        fields = ["id", "title", "description", "created_on", "video_file", "video_image", "video_progress", "video_duration"]
 
 
     def validate_video_progress(self, value):
         if value < 0:
             raise serializers.ValidationError(["Progress cannot be a negative number!"])
+        return round(value, 1)
+    
+
+    def validate_video_duration(self, value):
+        if value < 0:
+            raise serializers.ValidationError(["Duration cannot be a negative number!"])
         return round(value, 1)

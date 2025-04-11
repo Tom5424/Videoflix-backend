@@ -20,6 +20,7 @@ class Video(models.Model):
     video_image = models.ImageField(upload_to="video-images", null=True)
     image_created = models.BooleanField(default=False)
     video_progress = models.FloatField(default=0.0)
+    video_duration = models.FloatField(default=0.0)
 
 
     def save(self, *args, **kwargs):

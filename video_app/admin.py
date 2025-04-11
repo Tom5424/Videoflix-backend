@@ -16,5 +16,5 @@ class VideoResource(resources.ModelResource):
 
 @admin.register(Video)
 class VideoAdmin(ImportExportModelAdmin, admin.ModelAdmin):
-    exclude = ["video_image", "image_created", "video_progress"]
+    exclude = ["video_image", "image_created", "video_progress", "video_duration"]
     resource_classes = [VideoResource]
