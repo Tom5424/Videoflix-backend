@@ -16,27 +16,34 @@ CACHE_TTL = getattr(settings, "CACHE_TTL", DEFAULT_TIMEOUT)
 
 
 @method_decorator(cache_page(CACHE_TTL), name="dispatch")
-class ListVideos(APIView):
+class ListUnwatchedVideos(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
 
     def get(self, request):
-        genre = Genre.objects.all()
-        serializer = GenreWithVideosSerializer(genre, many=True)
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+        genres = Genre.objects.all()
+        data = []
+        for genre in genres:
+            unwatched_videos = genre.videos.filter(video_progress=0.0)
+            if unwatched_videos.exists():
+                serializer = VideoSerializer(unwatched_videos, many=True)
+                data.append({"genre_name": genre.genre_name, "videos": serializer.data})
+        return Response(data=data, status=status.HTTP_200_OK)
 
 
 @method_decorator(cache_page(CACHE_TTL), name="dispatch")
-class ListInProgressVideos(APIView):
+class ListWatchedVideos(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
 
     def get(self, request):
-        videos = Video.objects.filter(video_progress__gt=0, video_progress__lt=F("video_duration"))
+        videos = Video.objects.filter(video_progress__gt=0.0, video_progress__lt=F("video_duration"))
+        data = []
         serializer = VideoSerializer(videos, many=True)
-        return Response(data=serializer.data, status=status.HTTP_200_OK)
+        data.append({"genre_name": "keep watching", "videos": serializer.data})
+        return Response(data=data, status=status.HTTP_200_OK)
     
 
 @method_decorator(cache_page(CACHE_TTL), name="dispatch")

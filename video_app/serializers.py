@@ -36,7 +36,6 @@ class GenreWithVideosSerializer(serializers.ModelSerializer):
         fields = ["genre_name", "videos"]
 
 
-
 class DetailVideoSerializer(serializers.ModelSerializer):
 
 
