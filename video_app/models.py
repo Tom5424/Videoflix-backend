@@ -1,4 +1,4 @@
-from video_app.tasks import convert_to_360p, create_video_image
+from video_app.tasks import create_video_image, converts_to_multi_qualities_and_hls_format
 from django.db import models
 import os
 
@@ -28,8 +28,14 @@ class Video(models.Model):
         if not self.image_created: 
             self.image_created = True
             create_video_image(self)
-        convert_to_360p.delay(self.video_file.path)
+        if not self.pk:     
+            converts_to_multi_qualities_and_hls_format.delay(self.video_file.path)
         print("Video uploaded.")
+
+
+    def get_hls_master_playlist_url(self):
+        file_name = os.path.splitext(os.path.basename(self.video_file.name))[0]
+        return f"/media/hls-outputs/{file_name}_master.m3u8"     
 
 
     def delete(self):

@@ -37,11 +37,16 @@ class GenreWithVideosSerializer(serializers.ModelSerializer):
 
 
 class DetailVideoSerializer(serializers.ModelSerializer):
+    hls_master_playlist_url = serializers.SerializerMethodField()
 
 
     class Meta:
         model = Video
-        fields = ["id", "title", "description", "created_on", "video_file", "video_image", "video_progress", "video_duration"]
+        fields = ["id", "title", "description", "created_on", "video_file", "hls_master_playlist_url", "video_image", "video_progress", "video_duration"]
+
+
+    def get_hls_master_playlist_url(self, obj):
+        return obj.get_hls_master_playlist_url()
 
 
     def validate_video_progress(self, value):

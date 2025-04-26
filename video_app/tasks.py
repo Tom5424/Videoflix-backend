@@ -5,23 +5,37 @@ import os
 
 
 @shared_task
-def convert_to_360p(file_path):
-    file_path_no_extension, file_extension = os.path.splitext(file_path)
-    target_path = f"{file_path_no_extension}_360p{file_extension}"
+def converts_to_multi_qualities_and_hls_format(file_path):
     file_path_linux = "/mnt/" + file_path.replace("\\", "/").replace("C:", "c")
-    target_path_linux = "/mnt/" + target_path.replace("\\", "/").replace("C:", "c")
-    cmd = f'ffmpeg -i "{file_path_linux}" -vf "scale=640:360" -c:v libx264 -crf 23 -c:a aac -strict -2 "{target_path_linux}"'
-    subprocess.run(cmd, capture_output=True, shell=True)
-    convert_to_hsl_format(file_path_linux)
+    file_name = os.path.splitext(os.path.basename(file_path_linux))[0]
+    out_directory = "/mnt/c/Users/tompe/Desktop/Videoflix-backend/media/hls-outputs"
+    os.makedirs(out_directory, exist_ok=True)
+    master_playlist_name = f"{file_name}_master.m3u8"
+    segment_files = f"{out_directory}/{file_name}_%v_%03d.ts"
+    playlist_data = f"{out_directory}/{file_name}_%v.m3u8"
+    cmd = [
+        "ffmpeg", "-i", file_path_linux,
+        "-filter_complex",
+        "[0:v]split=4[v1][v2][v3][v4];"
+        "[v1]scale=160:120[vout1];"
+        "[v2]scale=640:360[vout2];"
+        "[v3]scale=1280:720[vout3];"
+        "[v4]scale=1920:1080[vout4]",
+        "-map", "[vout1]", "-c:v:0", "libx264", "-b:v:0", "150k",
+        "-map", "[vout2]", "-c:v:1", "libx264", "-b:v:1", "800k",
+        "-map", "[vout3]", "-c:v:2", "libx264", "-b:v:2", "2800k",
+        "-map", "[vout4]", "-c:v:3", "libx264", "-b:v:3", "5000k",
+        "-f", "hls",
+        "-hls_time", "10",
+        "-hls_playlist_type", "vod",
+        "-hls_segment_filename", segment_files,
+        "-master_pl_name", master_playlist_name,
+        "-var_stream_map", "v:0 v:1 v:2 v:3",
+        playlist_data,
+        "-preset", "veryfast",
+    ]
+    subprocess.run(cmd, check=True)
 
-
-def convert_to_hsl_format(file_path_linux):
-    output_dir = "/mnt/c/Users/tompe/Desktop/Videoflix-backend/media/hls-outputs"
-    base_name = os.path.splitext(os.path.basename(file_path_linux))[0]
-    output_m3u8_data = os.path.join(output_dir, f"{base_name}.m3u8").replace("\\", "/")
-    output_ts_data = os.path.join(output_dir, f"{base_name}_%03d.ts").replace("\\", "/")
-    cmd = f'ffmpeg -i "{file_path_linux}" -c copy -start_number 0 -hls_time 10 -hls_list_size 0 -hls_segment_filename "{output_ts_data}" -f hls "{output_m3u8_data}"'
-    subprocess.run(cmd, capture_output=True, shell=True)
 
 
 def create_video_image(video):
