@@ -24,13 +24,14 @@ class Video(models.Model):
 
 
     def save(self, *args, **kwargs):
+        video_was_new_uploaded = self._state.adding  # Checks if instanz already exist
         super().save(*args, **kwargs)
         if not self.image_created: 
             self.image_created = True
             create_video_image(self)
-        if not self.pk:     
+        if video_was_new_uploaded:     
             converts_to_multi_qualities_and_hls_format.delay(self.video_file.path)
-        print("Video uploaded.")
+            print("Video uploaded.")
 
 
     def get_hls_master_playlist_url(self):
