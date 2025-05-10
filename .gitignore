@@ -3,3 +3,4 @@
 /static/staticfiles
 /media
 db.sqlite3
+dump.rdb

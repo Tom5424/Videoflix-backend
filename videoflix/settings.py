@@ -76,7 +76,7 @@ MIDDLEWARE = [
 ]
 
 
-CELERY_BROKER_URL = 'redis://:foobared@localhost:6379/0'
+CELERY_BROKER_URL = 'redis://:foobared@172.25.240.1:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
@@ -108,10 +108,23 @@ WSGI_APPLICATION = 'videoflix.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'videoflix',
+        'USER': 'tom',
+        'PASSWORD': '123456789',
+        'HOST': '172.25.249.15',
+        'PORT': '5432',
     }
 }
 
