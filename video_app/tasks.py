@@ -1,4 +1,5 @@
 from django.core.files import File
+from django.conf import settings
 from celery import shared_task
 import subprocess
 import os
@@ -6,18 +7,18 @@ import os
 
 @shared_task
 def converts_to_multi_qualities_and_hls_format(file_path):
-    file_path_linux = "/mnt/" + file_path.replace("\\", "/").replace("C:", "c")
-    file_name = os.path.splitext(os.path.basename(file_path_linux))[0]
-    out_directory = "/mnt/c/Users/tompe/Desktop/Videoflix-backend/media/hls-outputs"
-    os.makedirs(out_directory, exist_ok=True)
+    input_path = os.path.join(settings.MEDIA_ROOT, file_path)
+    file_name = os.path.splitext(os.path.basename(input_path))[0]
+    output_directory = os.path.join(settings.MEDIA_ROOT, "hls-outputs")
+    os.makedirs(output_directory, exist_ok=True)
     master_playlist_name = f"{file_name}_master.m3u8"
-    segment_files = f"{out_directory}/{file_name}_%v_%03d.ts"
-    playlist_data = f"{out_directory}/{file_name}_%v.m3u8"
+    segment_files = f"{output_directory}/{file_name}_%v_%03d.ts"
+    playlist_data = f"{output_directory}/{file_name}_%v.m3u8"
     cmd = [
         "ffmpeg", "-y",
         "-nostdin",
         "-fflags", "+genpts",
-        "-i", file_path_linux,
+        "-i", input_path,
         "-filter_complex",
         "[0:v]split=4[v1][v2][v3][v4];"
         "[v1]scale=w=160:h=120[vout1];"

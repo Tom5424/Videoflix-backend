@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import socket
 from dotenv import load_dotenv
 
 
@@ -41,7 +42,8 @@ CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", default="http://lo
 DEBUG = True
 
 
-CACHE_TTL = 0  ##############################################################################
+CACHE_TTL = 60 * 15
+
 
 # Application definition
 
@@ -71,7 +73,7 @@ INSTALLED_APPS = [
     'django_rq',
 ]
 
-SITE_ID = 1
+SITE_ID = 2
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
@@ -189,7 +191,6 @@ CACHES = {
         "LOCATION": os.environ.get("REDIS_LOCATION", default="redis://redis:6379/1"),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "PASSWORD": "foobared",
         },
         "KEY_PREFIX": "videoflix"
     }
@@ -230,6 +231,13 @@ CORS_ALLOWED_ORIGINS = [
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+
+try:
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS += [ip[: ip.rfind(".")] + ".1" for ip in ips]
+except:
+    pass
 
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

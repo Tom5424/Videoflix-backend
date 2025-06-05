@@ -30,7 +30,7 @@ class Video(models.Model):
             self.image_created = True
             create_video_image(self)
         if video_was_new_uploaded:     
-            converts_to_multi_qualities_and_hls_format.delay(self.video_file.path)
+            converts_to_multi_qualities_and_hls_format.delay(self.video_file.name)
             print("Video uploaded.")
 
 
