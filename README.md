@@ -39,7 +39,7 @@
    git clone https://github.com/Tom5424/Videoflix-backend.git .
    ```
 
-2. Create .env with credentials:
+2. Create .env data with credentials
 
 
 3. Paste credentials with your own values
