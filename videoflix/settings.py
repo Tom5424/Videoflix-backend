@@ -232,12 +232,15 @@ except:
     pass
 
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "tom.petri7@gmail.com"
-EMAIL_HOST_PASSWORD = "azkx dupy cagm ggqp" 
+EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND", default="")
+EMAIL_HOST = os.environ.get("EMAIL_HOST", default="")
+EMAIL_PORT = os.environ.get("EMAIL_PORT", default="")
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", default=True)
+EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL", default=False)
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", default="secretpassword")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", default="no-reply@videoflix.de")
+
 
 ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_EMAIL_VERIFICATION = "mandatory" 
