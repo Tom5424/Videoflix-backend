@@ -90,11 +90,11 @@ MIDDLEWARE = [
 ]
 
 
-CELERY_BROKER_URL = f"redis://:foobared@{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}/0"
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
-CELERY_FLOWER_PORT = 5555
+# CELERY_BROKER_URL = f"redis://:foobared@{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}/0"
+# CELERY_ACCEPT_CONTENT = ['json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+# CELERY_FLOWER_PORT = 5555
 
 
 ROOT_URLCONF = 'videoflix.urls'
