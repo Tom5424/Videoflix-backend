@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from .utils import convert_string_to_boolean
 import os
 import socket
 from dotenv import load_dotenv
@@ -236,8 +237,8 @@ except:
 EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND", default="")
 EMAIL_HOST = os.environ.get("EMAIL_HOST", default="")
 EMAIL_PORT = os.environ.get("EMAIL_PORT", default="")
-EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS", default=True)
-EMAIL_USE_SSL = os.environ.get("EMAIL_USE_SSL", default=False)
+EMAIL_USE_TLS = convert_string_to_boolean(os.environ.get("EMAIL_USE_TLS", default=True))
+EMAIL_USE_SSL = convert_string_to_boolean(os.environ.get("EMAIL_USE_SSL", default=False))
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", default="")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", default="secretpassword")
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", default="no-reply@videoflix.de")
