@@ -3,5 +3,5 @@ from .views import GuestLoginView
 
 
 urlpatterns = [
-    path('guest-login/', GuestLoginView.as_view(), name='guest-login'),
+    path("", GuestLoginView.as_view(), name='guest-login'),
 ]
