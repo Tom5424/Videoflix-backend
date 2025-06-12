@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'debug_toolbar',
     'import_export',
+    'auth_app',
     'registration_app',
     'login_app',
     'user_detail_app',
