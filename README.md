@@ -86,6 +86,13 @@
    ```
 
 
+5. Start celery in a running docker container:
+
+   ```
+   docker-compose exec web celery -A videoflix worker --loglevel=info
+   ```    
+
+
 ## Usage
 
 
