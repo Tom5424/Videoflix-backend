@@ -72,7 +72,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'dj_rest_auth',
     'dj_rest_auth.registration',
-    'django_rq',
+    # 'django_rq',
 ]
 
 SITE_ID = 2
@@ -92,11 +92,11 @@ MIDDLEWARE = [
 ]
 
 
-# CELERY_BROKER_URL = f"redis://:foobared@{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}/0"
-# CELERY_ACCEPT_CONTENT = ['json']
-# CELERY_TASK_SERIALIZER = 'json'
-# CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
-# CELERY_FLOWER_PORT = 5555
+CELERY_BROKER_URL = f"redis://{os.environ.get('REDIS_HOST')}:{os.environ.get('REDIS_PORT')}/0"
+CELERY_ACCEPT_CONTENT = [os.environ.get("CELERY_ACCEPT_CONTENT", default="json")]
+CELERY_TASK_SERIALIZER = os.environ.get("CELERY_TASK_SERIALIZER", default="json")
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = convert_string_to_boolean(os.environ.get("CELERY_RETRY_ON_STARTUP", default="True"))
+CELERY_FLOWER_PORT = os.environ.get("CELERY_FLOWER_PORT", default=5555)
 
 
 ROOT_URLCONF = 'videoflix.urls'
@@ -191,15 +191,15 @@ CACHES = {
 }
 
 
-RQ_QUEUES = {
-    'default': {
-        'HOST': os.environ.get("REDIS_HOST", default="redis"),
-        'PORT': os.environ.get("REDIS_PORT", default=6379),
-        'DB': os.environ.get("REDIS_DB", default=0),
-        'DEFAULT_TIMEOUT': 900,
-        'REDIS_CLIENT_KWARGS': {},
-    },
-}
+# RQ_QUEUES = {
+#     'default': {
+#         'HOST': os.environ.get("REDIS_HOST", default="redis"),
+#         'PORT': os.environ.get("REDIS_PORT", default=6379),
+#         'DB': os.environ.get("REDIS_DB", default=0),
+#         'DEFAULT_TIMEOUT': 900,
+#         'REDIS_CLIENT_KWARGS': {},
+#     },
+# }
 
 
 REST_AUTH = {
