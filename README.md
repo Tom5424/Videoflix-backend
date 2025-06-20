@@ -61,9 +61,12 @@
    DB_PORT=5432
 
    REDIS_HOST=redis
-   REDIS_LOCATION=redis://redis:6379/1
    REDIS_PORT=6379
-   REDIS_DB=0
+
+   CELERY_ACCEPT_CONTENT=json
+   CELERY_TASK_SERIALIZER=json
+   CELERY_RETRY_ON_STARTUP=True
+   FLOWER_PORT=5555
 
    EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend 
    EMAIL_HOST=smtp.example.com
