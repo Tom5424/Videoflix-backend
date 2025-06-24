@@ -9,9 +9,6 @@ class GuestLoginView(APIView):
 
 
     def post(self, request):
-        try:
-            customUser = CustomUser.objects.get(username='guest')
-        except CustomUser.DoesNotExist:
-            return Response({"error": "Guest account not found."}, status=status.HTTP_404_NOT_FOUND)
-        token, created = Token.objects.get_or_create(user=customUser)
+        guestUser, created = CustomUser.objects.get_or_create(username='guest', defaults={"email": "guest@guest.com"})
+        token, created = Token.objects.get_or_create(user=guestUser)
         return Response({"key": token.key })

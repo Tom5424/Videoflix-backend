@@ -12,6 +12,7 @@ class GenreSerializer(serializers.ModelSerializer):
 
 class VideoSerializer(serializers.ModelSerializer):
     genres = GenreSerializer(many=True, write_only=True)
+    video_image = serializers.ImageField(read_only=True)
 
 
     class Meta:
