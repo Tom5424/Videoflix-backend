@@ -72,7 +72,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'dj_rest_auth',
     'dj_rest_auth.registration',
-    # 'django_rq',
 ]
 
 SITE_ID = 2
@@ -189,17 +188,6 @@ CACHES = {
         "KEY_PREFIX": "videoflix"
     }
 }
-
-
-# RQ_QUEUES = {
-#     'default': {
-#         'HOST': os.environ.get("REDIS_HOST", default="redis"),
-#         'PORT': os.environ.get("REDIS_PORT", default=6379),
-#         'DB': os.environ.get("REDIS_DB", default=0),
-#         'DEFAULT_TIMEOUT': 900,
-#         'REDIS_CLIENT_KWARGS': {},
-#     },
-# }
 
 
 REST_AUTH = {
