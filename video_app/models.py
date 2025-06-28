@@ -13,7 +13,7 @@ class Genre(models.Model):
 
 class Video(models.Model):
     title = models.CharField(max_length=15)
-    description = models.CharField(max_length=150)
+    description = models.TextField(max_length=150)
     genres = models.ManyToManyField(Genre, related_name="videos")
     created_on = models.DateField(auto_now_add=True)
     video_file = models.FileField(upload_to="videos")

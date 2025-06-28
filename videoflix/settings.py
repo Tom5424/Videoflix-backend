@@ -43,7 +43,7 @@ CSRF_TRUSTED_ORIGINS = os.environ.get("CSRF_TRUSTED_ORIGINS", default="http://lo
 DEBUG = True
 
 
-CACHE_TTL = 60 * 15
+CACHE_TTL = 0
 
 
 # Application definition
