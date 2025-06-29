@@ -21,12 +21,12 @@ def converts_to_multi_qualities_and_hls_format(file_path):
         "-i", input_path,
         "-filter_complex",
         "[0:v]split=4[v1][v2][v3][v4];"
-        "[v1]scale=w=160:h=120[vout1];"
-        "[v2]scale=w=640:h=360[vout2];"
+        "[v1]scale=w=640:h=360[vout1];"
+        "[v2]scale=w=854:h=480[vout2];"
         "[v3]scale=w=1280:h=720[vout3];"
         "[v4]scale=w=1920:h=1080[vout4]",
-        "-map", "[vout1]", "-c:v:0", "libx264", "-b:v:0", "150k",
-        "-map", "[vout2]", "-c:v:1", "libx264", "-b:v:1", "800k",
+        "-map", "[vout1]", "-c:v:0", "libx264", "-b:v:0", "800k",
+        "-map", "[vout2]", "-c:v:1", "libx264", "-b:v:1", "1400k",
         "-map", "[vout3]", "-c:v:2", "libx264", "-b:v:2", "2800k",
         "-map", "[vout4]", "-c:v:3", "libx264", "-b:v:3", "5000k",
         "-preset", "veryfast",          
