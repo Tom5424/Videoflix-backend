@@ -15,14 +15,14 @@
 - This project is a RESTful API backend for a wb app video platform
 - The user can register a account, verify the account, login, reset the password, request a new password
 - You can upload videos and backend handles the formatting of the videos
-- The videos can afterwards switch between 4 different qualities (120p, 360p, 720p, 1080p) or you can select "auto" and the best quality will be selected automatically
+- The videos can afterwards switch between 4 different qualities (360p, 480p, 720p, 1080p) or you can select "auto" and the best quality will be selected automatically
 
 ## Technologies
 
 - Python (Version 3.12.4)
 - Django (Version 5.1.5)
 - Django REST Framework (Version 3.15.2)
-- RQ for running complex tasks in the background
+- Celery for running complex tasks in the background
 - PostgreSQL for database management
 
 ## Prerequisites
